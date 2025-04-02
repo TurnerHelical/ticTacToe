@@ -21,6 +21,7 @@ header h1 {
 
 main {
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
     width: 100%;
@@ -40,7 +41,20 @@ main {
 }
 
 .player {
+    display: flex;
+    flex-direction: column;
     text-align: center;
+    
+    justify-content:  center;
+    gap: 10px;
+}
+
+.player h4 {
+    text-decoration: underline;
+}
+
+.player p {
+    
 }
 
 #gameBoard {
