@@ -50,7 +50,7 @@ function dom() {
         if (element.classList.contains(!attrValue)) {
             element.add(attrValue);
         } else {
-            element.classList.remove(attrValue)
+            element.classList.remove(attrValue);
         }
        })
     }
@@ -58,14 +58,34 @@ function dom() {
 }
 
 function gameBoard() {
+    let turn = 1;
     const startGame = () => {
         utils.changeClassForAll('.grid', 'class', 'disable');
         utils.changeAttribute('#start', 'class', 'disable');
         utils.changeAttribute('#board', 'class', 'blackBackground');
+        const board = utils.findElement('#board');
+        board.addEventListener('click', gamePlay(e));
     }
-    return {startGame}
+    const gamePlay = function (e) {
+        if (turn === 1) {
+            if (e.target.classList.contains('player1') || e.target.classList.contains('player2)')) {
+                console.log(e.target.id)
+            } else{
+                utils.changeAttribute(`#${e.target.id}`, 'class', 'player1');
+                turn--;
+            }
+        } else if (turn === 0) {
+            if (e.target.classList.contains('player1') || e.target.classList.contains('player2)')) {
+                console.log(e.target.id)
+            } else {
+                utils.changeAttribute(`#${e.target.id}`, 'class', 'player2');
+                turn++;
+        }
+    }
+    }
+    
+    return {startGame};
 }
-
 // On page load add event listener to the start button
 // also add event listerners to the change name and reset button
     // when change name is clicked, pop a modal and allow users to put in their names

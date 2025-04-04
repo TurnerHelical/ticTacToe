@@ -95,6 +95,20 @@ main {
     background-color: #F9EAE5;
 }
 
+.player1 {
+    background-image: url(./images/ticTacToeX.png);
+    background-size: 100% 100%
+}
+
+.player2 {
+    background-image: url(./images/ticTacToeO.png);
+    background-size: 100% 100%;
+}
+
+.grid:hover {
+    background-color: gray;
+}
+
 .disable {
     display: none;
 }
