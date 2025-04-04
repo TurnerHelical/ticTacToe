@@ -21,6 +21,7 @@ function playerFactory() {
         player2Name = 'Player 2';
         player1Score = '0';
         player2Score = '0';
+
     }
 
     return {increaseWin, changeName, getWins, getPlayerName, reset}
@@ -32,18 +33,28 @@ const utils = dom();
 const game = gameBoard();
 
 function dom() {
-    const findElement = (el1) => document.querySelector(el1);
-    const createElement = (el1) => document.createElement(el1);
-    const appendElement = (el1, el2) => el1.appendChild(el2);
-    const changeAttribute = function(el1, attr, attrValue) {
-        const element = findElement(el1);
+    const findElement = (selector) => document.querySelector(selector);
+    const findAllElements = (selector) => document.querySelectorAll(selector);
+    const createAndAppend = (parent, child) => { 
+        document.createElement(child);
+        parent.appendChild(child);
+    }
+    const changeAttribute = function(selector, attr, attrValue) {
+        const element = findElement(selector);
         element.setAttribute(attr, attrValue);
     }
-    return {findElement, createElement, appendElement, changeAttribute};
+
+    const changeAll = (selector, attr, attrValue) => {
+        const elements = findAllElements(selector);
+        elements.setAttribute(attr, attrValue)
+    }
+    return {findElement, createAndAppend, changeAttribute, findAllElements, changeAll};
 }
 
 function gameBoard() {
-    
+    const startGame = () => {
+        utils.changeAttribute()
+    }
 }
 
 // On page load add event listener to the start button
