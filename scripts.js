@@ -44,17 +44,26 @@ function dom() {
         element.setAttribute(attr, attrValue);
     }
 
-    const changeAll = (selector, attr, attrValue) => {
+    const changeClassForAll = (selector, attr, attrValue) => {
         const elements = findAllElements(selector);
-        elements.setAttribute(attr, attrValue)
+       elements.forEach(element => {
+        if (element.classList.contains(!attrValue)) {
+            element.add(attrValue);
+        } else {
+            element.classList.remove(attrValue)
+        }
+       })
     }
-    return {findElement, createAndAppend, changeAttribute, findAllElements, changeAll};
+    return {findElement, createAndAppend, changeAttribute, findAllElements, changeClassForAll};
 }
 
 function gameBoard() {
     const startGame = () => {
-        utils.changeAttribute()
+        utils.changeClassForAll('.grid', 'class', 'disable');
+        utils.changeAttribute('#start', 'class', 'disable');
+        utils.changeAttribute('#board', 'class', 'blackBackground');
     }
+    return {startGame}
 }
 
 // On page load add event listener to the start button
