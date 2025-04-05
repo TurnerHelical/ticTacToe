@@ -72,19 +72,58 @@ function gameBoard() {
                 return console.log('taken')
             } else{
                 utils.changeAttribute(`#${e.target.id}`, 'class', 'player1');
+                evaluateBoard('player1');
                 turn--;
-                console.log('test')
+                console.log('test');
+                
             }
         } else if (turn === 0) {
             if (e.target.classList.contains('player1') || e.target.classList.contains('player2') || e.target.id === 'board') {
                 return console.log('taken');
             } else {
                 utils.changeAttribute(`#${e.target.id}`, 'class', 'player2');
+                evaluateBoard('player2');
                 turn++;
-                console.log('test')
+                console.log('test');
+                
         }
     }
     }
+
+    const evaluateBoard = (player) => {
+        const grid1_1 = utils.findElement('#grid1-1');
+        const grid1_2 = utils.findElement('#grid1-2');
+        const grid1_3 = utils.findElement('#grid1-3');
+        const grid2_1 = utils.findElement('#grid2-1');
+        const grid2_2 = utils.findElement('#grid2-2');
+        const grid2_3 = utils.findElement('#grid2-3');
+        const grid3_1 = utils.findElement('#grid3-1');
+        const grid3_2 = utils.findElement('#grid3-2');
+        const grid3_3 = utils.findElement('#grid3-3');
+
+        if ( grid1_1.classList.contains(`${player}`)  && grid1_2.classList.contains(`${player}`) && grid1_3.classList.contains(`${player}`)
+            || grid2_1.classList.contains(`${player}`)  && grid2_2.classList.contains(`${player}`) && grid2_3.classList.contains(`${player}`)
+            || grid3_1.classList.contains(`${player}`)  && grid3_2.classList.contains(`${player}`) && grid3_3.classList.contains(`${player}`)
+            || grid1_1.classList.contains(`${player}`)  && grid1_2.classList.contains(`${player}`) && grid1_3.classList.contains(`${player}`)
+            || grid2_1.classList.contains(`${player}`)  && grid2_2.classList.contains(`${player}`) && grid2_3.classList.contains(`${player}`)
+            || grid3_1.classList.contains(`${player}`)  && grid3_2.classList.contains(`${player}`) && grid3_3.classList.contains(`${player}`)
+            || grid1_1.classList.contains(`${player}`)  && grid2_2.classList.contains(`${player}`) && grid3_3.classList.contains(`${player}`)
+            || grid1_3.classList.contains(`${player}`)  && grid2_2.classList.contains(`${player}`) && grid1_3.classList.contains(`${player}`) )  {
+
+                winner(`${player}`);
+                return
+
+            }
+       else { 
+            return
+        } 
+    }
+
+    const winner = (player) => {
+        console.log(`${player}`)
+    }
+        
+    
     
     return {startGame};
 }
