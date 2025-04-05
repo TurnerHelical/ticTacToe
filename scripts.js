@@ -64,22 +64,24 @@ function gameBoard() {
         utils.changeAttribute('#start', 'class', 'disable');
         utils.changeAttribute('#board', 'class', 'blackBackground');
         const board = utils.findElement('#board');
-        board.addEventListener('click', gamePlay(e));
+        board.addEventListener('click', function(e) {gamePlay(e);});
     }
     const gamePlay = function (e) {
         if (turn === 1) {
-            if (e.target.classList.contains('player1') || e.target.classList.contains('player2)')) {
-                console.log(e.target.id)
+            if (e.target.classList.contains('player1') || e.target.classList.contains('player2') || e.target.id === 'board') {
+                return console.log('taken')
             } else{
                 utils.changeAttribute(`#${e.target.id}`, 'class', 'player1');
                 turn--;
+                console.log('test')
             }
         } else if (turn === 0) {
-            if (e.target.classList.contains('player1') || e.target.classList.contains('player2)')) {
-                console.log(e.target.id)
+            if (e.target.classList.contains('player1') || e.target.classList.contains('player2') || e.target.id === 'board') {
+                return console.log('taken');
             } else {
                 utils.changeAttribute(`#${e.target.id}`, 'class', 'player2');
                 turn++;
+                console.log('test')
         }
     }
     }
