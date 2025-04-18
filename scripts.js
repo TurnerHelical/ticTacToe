@@ -64,7 +64,6 @@ function gameBoard() {
         utils.changeAttribute('#start', 'class', 'disable');
         utils.changeAttribute('#board', 'class', 'blackBackground');
         const board = utils.findElement('#board');
-<<<<<<< HEAD
         board.addEventListener('click', gamePlay);
     }
     const gamePlay = function (e) {
@@ -72,15 +71,6 @@ function gameBoard() {
             if (e.target.classList.contains('player1') || e.target.classList.contains('player2')) {
                 console.log(e.target.id)
             } else {
-=======
-        board.addEventListener('click', function(e) {gamePlay(e);});
-    }
-    const gamePlay = function (e) {
-        if (turn === 1) {
-            if (e.target.classList.contains('player1') || e.target.classList.contains('player2') || e.target.id === 'board') {
-                return console.log('taken')
-            } else{
->>>>>>> 3f2643bc451f16d3f143ff44b40ecc9edd9c6b3c
                 utils.changeAttribute(`#${e.target.id}`, 'class', 'player1');
                 evaluateBoard('player1');
                 turn--;
@@ -88,23 +78,13 @@ function gameBoard() {
                 
             }
         } else if (turn === 0) {
-<<<<<<< HEAD
             if (e.target.classList.contains('player1') || e.target.classList.contains('player2')) {
                 console.log(e.target.id)
-=======
-            if (e.target.classList.contains('player1') || e.target.classList.contains('player2') || e.target.id === 'board') {
-                return console.log('taken');
->>>>>>> 3f2643bc451f16d3f143ff44b40ecc9edd9c6b3c
             } else {
                 utils.changeAttribute(`#${e.target.id}`, 'class', 'player2');
                 evaluateBoard('player2');
                 turn++;
-<<<<<<< HEAD
             }
-=======
-                console.log('test');
-                
->>>>>>> 3f2643bc451f16d3f143ff44b40ecc9edd9c6b3c
         }
     }
     const checkWin = () => {
@@ -130,7 +110,6 @@ function gameBoard() {
         // console.log(player1Choices);
     }
 
-<<<<<<< HEAD
     // const playerPicks = (player) => {
     //     let selections = Array.from(player).filter(grid => {
     //         grid.id.includes('grid1-1') && grid.id.includes('grid1-2') && grid.id.includes('grid1-3')
@@ -149,45 +128,6 @@ function gameBoard() {
     return { startGame, checkWin };
 };
 
-=======
-    const evaluateBoard = (player) => {
-        const grid1_1 = utils.findElement('#grid1-1');
-        const grid1_2 = utils.findElement('#grid1-2');
-        const grid1_3 = utils.findElement('#grid1-3');
-        const grid2_1 = utils.findElement('#grid2-1');
-        const grid2_2 = utils.findElement('#grid2-2');
-        const grid2_3 = utils.findElement('#grid2-3');
-        const grid3_1 = utils.findElement('#grid3-1');
-        const grid3_2 = utils.findElement('#grid3-2');
-        const grid3_3 = utils.findElement('#grid3-3');
-
-        if ( grid1_1.classList.contains(`${player}`)  && grid1_2.classList.contains(`${player}`) && grid1_3.classList.contains(`${player}`)
-            || grid2_1.classList.contains(`${player}`)  && grid2_2.classList.contains(`${player}`) && grid2_3.classList.contains(`${player}`)
-            || grid3_1.classList.contains(`${player}`)  && grid3_2.classList.contains(`${player}`) && grid3_3.classList.contains(`${player}`)
-            || grid1_1.classList.contains(`${player}`)  && grid1_2.classList.contains(`${player}`) && grid1_3.classList.contains(`${player}`)
-            || grid2_1.classList.contains(`${player}`)  && grid2_2.classList.contains(`${player}`) && grid2_3.classList.contains(`${player}`)
-            || grid3_1.classList.contains(`${player}`)  && grid3_2.classList.contains(`${player}`) && grid3_3.classList.contains(`${player}`)
-            || grid1_1.classList.contains(`${player}`)  && grid2_2.classList.contains(`${player}`) && grid3_3.classList.contains(`${player}`)
-            || grid1_3.classList.contains(`${player}`)  && grid2_2.classList.contains(`${player}`) && grid1_3.classList.contains(`${player}`) )  {
-
-                winner(`${player}`);
-                return
-
-            }
-       else { 
-            return
-        } 
-    }
-
-    const winner = (player) => {
-        console.log(`${player}`)
-    }
-        
-    
-    
-    return {startGame};
-}
->>>>>>> 3f2643bc451f16d3f143ff44b40ecc9edd9c6b3c
 // On page load add event listener to the start button
 // also add event listerners to the change name and reset button
 // when change name is clicked, pop a modal and allow users to put in their names
