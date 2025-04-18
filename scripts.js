@@ -24,7 +24,7 @@ function playerFactory() {
 
     }
 
-    return {increaseWin, changeName, getWins, getPlayerName, reset}
+    return { increaseWin, changeName, getWins, getPlayerName, reset }
 }
 
 
@@ -35,26 +35,26 @@ const game = gameBoard();
 function dom() {
     const findElement = (selector) => document.querySelector(selector);
     const findAllElements = (selector) => document.querySelectorAll(selector);
-    const createAndAppend = (parent, child) => { 
+    const createAndAppend = (parent, child) => {
         document.createElement(child);
         parent.appendChild(child);
     }
-    const changeAttribute = function(selector, attr, attrValue) {
+    const changeAttribute = function (selector, attr, attrValue) {
         const element = findElement(selector);
         element.setAttribute(attr, attrValue);
     }
 
     const changeClassForAll = (selector, attr, attrValue) => {
         const elements = findAllElements(selector);
-       elements.forEach(element => {
-        if (element.classList.contains(!attrValue)) {
-            element.add(attrValue);
-        } else {
-            element.classList.remove(attrValue);
-        }
-       })
+        elements.forEach(element => {
+            if (element.classList.contains(!attrValue)) {
+                element.add(attrValue);
+            } else {
+                element.classList.remove(attrValue);
+            }
+        })
     }
-    return {findElement, createAndAppend, changeAttribute, findAllElements, changeClassForAll};
+    return { findElement, createAndAppend, changeAttribute, findAllElements, changeClassForAll };
 }
 
 function gameBoard() {
@@ -70,7 +70,7 @@ function gameBoard() {
         if (turn === 1) {
             if (e.target.classList.contains('player1') || e.target.classList.contains('player2')) {
                 console.log(e.target.id)
-            } else{
+            } else {
                 utils.changeAttribute(`#${e.target.id}`, 'class', 'player1');
                 turn--;
             }
@@ -80,19 +80,57 @@ function gameBoard() {
             } else {
                 utils.changeAttribute(`#${e.target.id}`, 'class', 'player2');
                 turn++;
+            }
         }
     }
+    const checkWin = () => {
+        const grids = utils.findAllElements('.grid');
+        console.log(grids);
+        let gridArray = Array.from(grids);
+        let testGrid = gridArray.filter
+        // console.log(player2);
+        // let selections = Array.from(player1);
+        // console.log(selections);
+        // let testGrid = selections.filter((grid) => grid.id = 'grid1-1' && grid.id = 'grid1-2' && grid.id);
+        // return testGrid
+        // grid.id.includes('grid1-1') && grid.id.includes('grid1-2') && grid.id.includes('grid1-3')
+        // || grid.id.includes('grid2-1') && grid.id.includes('grid2-2') && grid.id.includes('grid2-3')
+        // || grid.id.includes('grid3-1') && grid.id.includes('grid3-2') && grid.id.includes('grid3-3')
+        // || grid.id.includes('grid1-1') && grid.id.includes('grid2-1') && grid.id.includes('grid3-1')
+        // || grid.id.includes('grid1-2') && grid.id.includes('grid2-2') && grid.id.includes('grid3-2')
+        // || grid.id.includes('grid1-3') && grid.id.includes('grid2-3') && grid.id.includes('grid3-3')
+        // || grid.id.includes('grid1-1') && grid.id.includes('grid2-2') && grid.id.includes('grid3-3')
+        // || grid.id.includes('grid1-3') && grid.id.includes('grid2-2') && grid.id.includes('grid3-1')}
+       
+        // let player1Choices = playerPicks(player);
+        // console.log(player1Choices);
     }
-    
-    return {startGame};
-}
+
+    // const playerPicks = (player) => {
+    //     let selections = Array.from(player).filter(grid => {
+    //         grid.id.includes('grid1-1') && grid.id.includes('grid1-2') && grid.id.includes('grid1-3')
+    //         || grid.id.includes('grid2-1') && grid.id.includes('grid2-2') && grid.id.includes('grid2-3')
+    //         || grid.id.includes('grid3-1') && grid.id.includes('grid3-2') && grid.id.includes('grid3-3')
+    //         || grid.id.includes('grid1-1') && grid.id.includes('grid2-1') && grid.id.includes('grid3-1')
+    //         || grid.id.includes('grid1-2') && grid.id.includes('grid2-2') && grid.id.includes('grid3-2')
+    //         || grid.id.includes('grid1-3') && grid.id.includes('grid2-3') && grid.id.includes('grid3-3')
+    //         || grid.id.includes('grid1-1') && grid.id.includes('grid2-2') && grid.id.includes('grid3-3')
+    //         || grid.id.includes('grid1-3') && grid.id.includes('grid2-2') && grid.id.includes('grid3-1')
+
+    //     }
+    //     )
+        
+    // }
+    return { startGame, checkWin };
+};
+
 // On page load add event listener to the start button
 // also add event listerners to the change name and reset button
-    // when change name is clicked, pop a modal and allow users to put in their names
-    // when reset is clicked, reset the gameboard back to start and default names
+// when change name is clicked, pop a modal and allow users to put in their names
+// when reset is clicked, reset the gameboard back to start and default names
 // when start button is pushed, add disable class to it and remove disable class from the grid's
 // when hover over the grids change background color to gray
-    //when grid is clicked change the display to show an X (player1) or an O (player2)
+//when grid is clicked change the display to show an X (player1) or an O (player2)
 // when either player has 3 of their icons in a row, increment the win score under their name
-    // change the board display to say name of winner and win message
-    // add a play again button to display and add an event listerner to it to play the game again without resetting scores or names
+// change the board display to say name of winner and win message
+// add a play again button to display and add an event listerner to it to play the game again without resetting scores or name
