@@ -8,13 +8,13 @@ function playerFactory() {
     let player1Score = 0;
     let player2Score = 0;
 
-    const changeName = (user, newName) => (user === player1Name) ? player1Name = newName : player2Name = newName;
+    const changeName = (user, newName) => (user === 'player1') ? player1Name = newName : player2Name = newName;
 
-    const increaseWin = (winner) => (winner === player1Name) ? ++player1Score : ++player2Score;
+    const increaseWin = (winner) => (winner === 'player1') ? ++player1Score : ++player2Score;
 
-    const getWins = (user) => (user === player1Name) ? player1Score : player2Score;
+    const getWins = (user) => (user === 'player1') ? player1Score : player2Score;
 
-    const getPlayerName = (user) => (user === player1Name) ? player1Name : player2Name;
+    const getPlayerName = (user) => (user === 'player1') ? player1Name : player2Name;
 
     const reset = () => {
         player1Name = 'Player 1';
@@ -24,7 +24,7 @@ function playerFactory() {
 
     }
 
-    return {increaseWin, changeName, getWins, getPlayerName, reset}
+    return { increaseWin, changeName, getWins, getPlayerName, reset }
 }
 
 
@@ -35,59 +35,55 @@ const game = gameBoard();
 function dom() {
     const findElement = (selector) => document.querySelector(selector);
     const findAllElements = (selector) => document.querySelectorAll(selector);
-    const createAndAppend = (parent, child) => { 
+    const createAndAppend = (parent, child) => {
         document.createElement(child);
         parent.appendChild(child);
     }
-    const changeAttribute = function(selector, attr, attrValue) {
+    const toggleClass = function (selector, className) {
         const element = findElement(selector);
-        element.setAttribute(attr, attrValue);
+        element.classList.toggle(className);
     }
-
-    const changeClassForAll = (selector, attr, attrValue) => {
+    const toggleClassForAll = (selector, className) => {
         const elements = findAllElements(selector);
-       elements.forEach(element => {
-        if (element.classList.contains(!attrValue)) {
-            element.add(attrValue);
-        } else {
-            element.classList.remove(attrValue);
-        }
-       })
+        elements.forEach(element => {
+            element.classList.toggle(className);
+        })
     }
-    return {findElement, createAndAppend, changeAttribute, findAllElements, changeClassForAll};
+    return { findElement, createAndAppend, toggleClass, findAllElements, toggleClassForAll };
 }
 
 function gameBoard() {
     let turn = 1;
+    let player1 = player.getPlayerName()
     const startGame = () => {
-        utils.changeClassForAll('.grid', 'class', 'disable');
-        utils.changeAttribute('#start', 'class', 'disable');
-        utils.changeAttribute('#board', 'class', 'blackBackground');
+        utils.toggleClassForAll('.grid', 'disable');
+        utils.toggleClass('#start', 'disable');
+        utils.toggleClass('#board', 'blackBackground');
         const board = utils.findElement('#board');
-        board.addEventListener('click', function(e) {gamePlay(e);});
+        board.addEventListener('click', gamePlay);
     }
     const gamePlay = function (e) {
         if (turn === 1) {
             if (e.target.classList.contains('player1') || e.target.classList.contains('player2') || e.target.id === 'board') {
                 return console.log('taken')
-            } else{
-                utils.changeAttribute(`#${e.target.id}`, 'class', 'player1');
+            } else {
+                utils.toggleClass(`#${e.target.id}`, 'player1');
                 evaluateBoard('player1');
                 turn--;
                 console.log('test');
-                
+
             }
         } else if (turn === 0) {
             if (e.target.classList.contains('player1') || e.target.classList.contains('player2') || e.target.id === 'board') {
                 return console.log('taken');
             } else {
-                utils.changeAttribute(`#${e.target.id}`, 'class', 'player2');
+                utils.toggleClass(`#${e.target.id}`, 'player2');
                 evaluateBoard('player2');
                 turn++;
                 console.log('test');
-                
+
+            }
         }
-    }
     }
 
     const evaluateBoard = (player) => {
@@ -101,41 +97,44 @@ function gameBoard() {
         const grid3_2 = utils.findElement('#grid3-2');
         const grid3_3 = utils.findElement('#grid3-3');
 
-        if ( grid1_1.classList.contains(`${player}`)  && grid1_2.classList.contains(`${player}`) && grid1_3.classList.contains(`${player}`)
-            || grid2_1.classList.contains(`${player}`)  && grid2_2.classList.contains(`${player}`) && grid2_3.classList.contains(`${player}`)
-            || grid3_1.classList.contains(`${player}`)  && grid3_2.classList.contains(`${player}`) && grid3_3.classList.contains(`${player}`)
-            || grid1_1.classList.contains(`${player}`)  && grid1_2.classList.contains(`${player}`) && grid1_3.classList.contains(`${player}`)
-            || grid2_1.classList.contains(`${player}`)  && grid2_2.classList.contains(`${player}`) && grid2_3.classList.contains(`${player}`)
-            || grid3_1.classList.contains(`${player}`)  && grid3_2.classList.contains(`${player}`) && grid3_3.classList.contains(`${player}`)
-            || grid1_1.classList.contains(`${player}`)  && grid2_2.classList.contains(`${player}`) && grid3_3.classList.contains(`${player}`)
-            || grid1_3.classList.contains(`${player}`)  && grid2_2.classList.contains(`${player}`) && grid1_3.classList.contains(`${player}`) )  {
+        if (grid1_1.classList.contains(`${player}`) && grid1_2.classList.contains(`${player}`) && grid1_3.classList.contains(`${player}`)
+            || grid2_1.classList.contains(`${player}`) && grid2_2.classList.contains(`${player}`) && grid2_3.classList.contains(`${player}`)
+            || grid3_1.classList.contains(`${player}`) && grid3_2.classList.contains(`${player}`) && grid3_3.classList.contains(`${player}`)
+            || grid1_1.classList.contains(`${player}`) && grid2_1.classList.contains(`${player}`) && grid3_1.classList.contains(`${player}`)
+            || grid1_2.classList.contains(`${player}`) && grid2_2.classList.contains(`${player}`) && grid3_2.classList.contains(`${player}`)
+            || grid1_3.classList.contains(`${player}`) && grid2_3.classList.contains(`${player}`) && grid3_3.classList.contains(`${player}`)
+            || grid1_1.classList.contains(`${player}`) && grid2_2.classList.contains(`${player}`) && grid3_3.classList.contains(`${player}`)
+            || grid1_3.classList.contains(`${player}`) && grid2_2.classList.contains(`${player}`) && grid3_1.classList.contains(`${player}`)) {
 
-                winner(`${player}`);
-                return
-
-            }
-       else { 
+            winner(`${player}`);
             return
-        } 
+
+        }
+        else {
+            return
+        }
     }
 
     const winner = (player) => {
         const board = utils.findElement('#board');
-        utils.changeClassForAll('.grid', 'class', 'disable');
+        utils.toggleClassForAll('.grid', 'disable');
+        utils.toggleClass('#board', 'blackBackground')
+        utils.toggleClass('#winner', 'disable');
+        board.removeEventListener('click', gamePlay);
         console.log(`${player}`)
     }
-        
-    
-    
-    return {startGame};
+
+
+
+    return { startGame };
 }
 // On page load add event listener to the start button
 // also add event listerners to the change name and reset button
-    // when change name is clicked, pop a modal and allow users to put in their names
-    // when reset is clicked, reset the gameboard back to start and default names
+// when change name is clicked, pop a modal and allow users to put in their names
+// when reset is clicked, reset the gameboard back to start and default names
 // when start button is pushed, add disable class to it and remove disable class from the grid's
 // when hover over the grids change background color to gray
-    //when grid is clicked change the display to show an X (player1) or an O (player2)
+//when grid is clicked change the display to show an X (player1) or an O (player2)
 // when either player has 3 of their icons in a row, increment the win score under their name
-    // change the board display to say name of winner and win message
-    // add a play again button to display and add an event listerner to it to play the game again without resetting scores or names
+// change the board display to say name of winner and win message
+// add a play again button to display and add an event listerner to it to play the game again without resetting scores or names
