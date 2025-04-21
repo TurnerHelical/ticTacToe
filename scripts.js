@@ -56,9 +56,9 @@ function gameBoard() {
     let turn = 1;
     let player1 = player.getPlayerName()
     const startGame = () => {
+        utils.toggleClass('#board', 'blackBackground');
         utils.toggleClassForAll('.grid', 'disable');
         utils.toggleClass('#start', 'disable');
-        utils.toggleClass('#board', 'blackBackground');
         const board = utils.findElement('#board');
         board.addEventListener('click', gamePlay);
     }
@@ -86,6 +86,15 @@ function gameBoard() {
         }
     }
 
+    const playAgain = () => {
+        const again = utils.findElement('#again');
+        const done = utils.findElement('#done');
+        utils.toggleClass('#winnerBtnCtr' , 'disable');
+        again.removeEventListener('click', playAgain);
+        // done.removeEventListener('click', finalScore);
+        startGame();
+    }
+
     const evaluateBoard = (player) => {
         const grid1_1 = utils.findElement('#grid1-1');
         const grid1_2 = utils.findElement('#grid1-2');
@@ -107,6 +116,7 @@ function gameBoard() {
             || grid1_3.classList.contains(`${player}`) && grid2_2.classList.contains(`${player}`) && grid3_1.classList.contains(`${player}`)) {
 
             winner(`${player}`);
+            resetBoard();
             return
 
         }
@@ -121,7 +131,23 @@ function gameBoard() {
         utils.toggleClass('#board', 'blackBackground')
         utils.toggleClass('#winner', 'disable');
         board.removeEventListener('click', gamePlay);
+        const again = utils.findElement('#again');
+        const done = utils.findElement('#done');
+        again.addEventListener('click', playAgain);
+        // done.addEventListener('click', finalScore);
         console.log(`${player}`)
+    }
+    const resetBoard = () => {
+        const grids = utils.findAllElements('.grid');
+        grids.forEach((grid) => {
+            if (grid.classList.contains('player1') || grid.classList.contains('player2')) {
+                grid.classList.remove('player1');
+                grid.classList.remove('player2');
+                console.log('works')
+            } else {
+                return
+            }
+        })
     }
 
 
