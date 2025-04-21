@@ -134,13 +134,43 @@ main {
 }
 
 #winner {
+    padding: 20px 10px;
     grid-area: 1 / 1 / 4 / 4;
     display: flex;
     flex-direction: column;
-    justify-content: center;
     align-items: center;
+    gap: 20px;
 }
 
+#winnerName {
+    font-size: 32px;
+}
+
+#winnerComment {
+
+    font-size: 20px;
+}
+
+#winnerBtnCtr {
+    display: flex;
+    justify-content: space-evenly;
+    gap: 20px;
+    width: 100%;
+}
+
+#winnerBtnCtr button {
+    padding: 10px 40px;
+    border: black 1px solid;
+    border-radius: 10px;
+    box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.5);
+    background-color: rgba(83 , 195 , 189, 0.5 );
+}
+
+#winnerBtnCtr button:hover {
+    background-color:black;
+    color: white;
+    box-shadow: none;
+}
 
 
 footer {
