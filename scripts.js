@@ -120,6 +120,8 @@ function gameBoard() {
     }
 
     const winner = (player) => {
+        const board = utils.findElement('#board');
+        utils.changeClassForAll('.grid', 'class', 'disable');
         console.log(`${player}`)
     }
         

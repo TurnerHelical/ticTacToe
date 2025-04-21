@@ -110,7 +110,7 @@ main {
 }
 
 .disable {
-    display: none;
+    display: none !important;
 }
 
 #start {
@@ -131,6 +131,14 @@ main {
     background-color:black;
     color: white;
     box-shadow: none;
+}
+
+#winner {
+    grid-area: 1 / 1 / 4 / 4;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
 
 
