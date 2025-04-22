@@ -53,9 +53,19 @@ function dom() {
 }
 
 function gameBoard() {
+    let roundWinner = '';
     let turn = 1;
-    let player1 = player.getPlayerName()
+    let player1 = player.getPlayerName('player1');
+    let player2 = player.getPlayerName('player2');
+    const playerTurn = utils.findElement('#playerTurn');
     const startGame = () => {
+        console.log(turn);
+
+        if (turn === 1) {
+            playerTurn.innerHTML = (`${player1}'s Turn`)
+        } else if (turn === 0) {
+            playerTurn.innerHTML = (`${player2}'s Turn`)
+        }
         utils.toggleClass('#board', 'blackBackground');
         utils.toggleClassForAll('.grid', 'disable');
         utils.toggleClass('#start', 'disable');
@@ -64,23 +74,25 @@ function gameBoard() {
     }
     const gamePlay = function (e) {
         if (turn === 1) {
+
             if (e.target.classList.contains('player1') || e.target.classList.contains('player2') || e.target.id === 'board' || e.target.id === 'again') {
-                return 
+                return
             } else {
                 utils.toggleClass(`#${e.target.id}`, 'player1');
+                playerTurn.innerHTML = (`${player2}'s Turn`)
                 evaluateBoard('player1');
-                turn--;
-                console.log('test');
+                console.log(turn);
 
             }
         } else if (turn === 0) {
+
             if (e.target.classList.contains('player1') || e.target.classList.contains('player2') || e.target.id === 'board' || e.target.id === 'again') {
-                return 
+                return
             } else {
                 utils.toggleClass(`#${e.target.id}`, 'player2');
+                playerTurn.innerHTML = (`${player1}'s Turn`)
                 evaluateBoard('player2');
-                turn++;
-                console.log('test');
+                console.log(turn);
 
             }
         }
@@ -116,14 +128,16 @@ function gameBoard() {
             || grid1_1.classList.contains(`${player}`) && grid2_2.classList.contains(`${player}`) && grid3_3.classList.contains(`${player}`)
             || grid1_3.classList.contains(`${player}`) && grid2_2.classList.contains(`${player}`) && grid3_1.classList.contains(`${player}`)) {
 
-            resetBoard();
-            winner(`${player}`);
             
+            roundWinner = `${player}`;
+            winner(`${player}`);
+            resetBoard();
             return
 
-        }
-        else {
-            return
+        } else if (turn === 1) {
+            turn--;
+        } else if (turn === 0) {
+            turn++;
         }
     }
 
@@ -136,6 +150,12 @@ function gameBoard() {
         const done = utils.findElement('#done');
         again.addEventListener('click', playAgain);
         // done.addEventListener('click', finalScore);
+
+        if (roundWinner === 'player1') {
+            turn = 0;
+        } else {
+            turn = 1;
+        }
         console.log(`${player}`)
     }
     const resetBoard = () => {
@@ -151,6 +171,7 @@ function gameBoard() {
                 return
             }
         })
+        roundWinner = '';
     }
 
 
