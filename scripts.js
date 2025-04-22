@@ -58,6 +58,7 @@ function gameBoard() {
     let player1 = player.getPlayerName('player1');
     let player2 = player.getPlayerName('player2');
     const playerTurn = utils.findElement('#playerTurn');
+    const startButton = utils.findElement('#startButton');
     const startGame = () => {
         console.log(turn);
 
@@ -75,7 +76,7 @@ function gameBoard() {
     const gamePlay = function (e) {
         if (turn === 1) {
 
-            if (e.target.classList.contains('player1') || e.target.classList.contains('player2') || e.target.id === 'board' || e.target.id === 'again') {
+            if (e.target.classList.contains('player1') || e.target.classList.contains('player2') || !e.target.classList.contains('grid'))  {
                 return
             } else {
                 utils.toggleClass(`#${e.target.id}`, 'player1');
@@ -152,8 +153,10 @@ function gameBoard() {
         // done.addEventListener('click', finalScore);
 
         if (roundWinner === 'player1') {
+            playerTurn.innerHTML = ('Round Over!!');
             turn = 0;
         } else {
+            playerTurn.innerHTML = ('Round Over!!');
             turn = 1;
         }
         console.log(`${player}`)
@@ -175,7 +178,7 @@ function gameBoard() {
     }
 
 
-
+    startButton.addEventListener('click', startGame);
     return { startGame };
 }
 // On page load add event listener to the start button
