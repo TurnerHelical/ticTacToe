@@ -60,7 +60,6 @@ function gameBoard() {
     const playerTurn = utils.findElement('#playerTurn');
     const startButton = utils.findElement('#startButton');
     const startGame = () => {
-        console.log(turn);
 
         if (turn === 1) {
             playerTurn.innerHTML = (`${player1}'s Turn`)
@@ -82,7 +81,6 @@ function gameBoard() {
                 utils.toggleClass(`#${e.target.id}`, 'player1');
                 playerTurn.innerHTML = (`${player2}'s Turn`)
                 evaluateBoard('player1');
-                console.log(turn);
 
             }
         } else if (turn === 0) {
@@ -93,7 +91,6 @@ function gameBoard() {
                 utils.toggleClass(`#${e.target.id}`, 'player2');
                 playerTurn.innerHTML = (`${player1}'s Turn`)
                 evaluateBoard('player2');
-                console.log(turn);
 
             }
         }
@@ -142,7 +139,8 @@ function gameBoard() {
         }
     }
 
-    const winner = (player) => {
+    const winner = (playerWinner) => {
+        changeWinTotal(playerWinner);
         const board = utils.findElement('#board');
         utils.toggleClassForAll('.grid', 'disable');
         utils.toggleClass('#board', 'blackBackground')
@@ -159,8 +157,22 @@ function gameBoard() {
             playerTurn.innerHTML = ('Round Over!!');
             turn = 1;
         }
-        console.log(`${player}`)
     }
+
+    const changeWinTotal = (playerWinner) => {
+        player.increaseWin(playerWinner);
+        const p1 = utils.findElement('#p1Wins');
+        const p2 = utils.findElement('#p2Wins');
+        if (playerWinner === 'player1') {
+            const p1Score = player.getWins('player1');
+            p1.innerHTML = (`Wins: ${p1Score}`);
+        } else {
+            const p2Score = player.getWins('player2');
+            p2.innerHTML = (`Wins: ${p2Score}`);
+        }
+    }
+
+
     const resetBoard = () => {
         const board = utils.findElement('#board');
         const grids = utils.findAllElements('.grid');
