@@ -59,6 +59,8 @@ function gameBoard() {
     let player2 = player.getPlayerName('player2');
     const playerTurn = utils.findElement('#playerTurn');
     const startButton = utils.findElement('#startButton');
+    const again = utils.findElement('.again');
+    const done = utils.findElement('.done');
     const startGame = () => {
 
         if (turn === 1) {
@@ -97,8 +99,8 @@ function gameBoard() {
     }
 
     const playAgain = () => {
-        const again = utils.findElement('#again');
-        const done = utils.findElement('#done');
+        const again = utils.findElement('.again');
+        const done = utils.findElement('.done');
         utils.toggleClass('#winner', 'disable');
         again.removeEventListener('click', playAgain);
         utils.toggleClass('#start', 'disable');
@@ -116,7 +118,7 @@ function gameBoard() {
         const grid3_1 = utils.findElement('#grid3-1');
         const grid3_2 = utils.findElement('#grid3-2');
         const grid3_3 = utils.findElement('#grid3-3');
-
+       
         if (grid1_1.classList.contains(`${player}`) && grid1_2.classList.contains(`${player}`) && grid1_3.classList.contains(`${player}`)
             || grid2_1.classList.contains(`${player}`) && grid2_2.classList.contains(`${player}`) && grid2_3.classList.contains(`${player}`)
             || grid3_1.classList.contains(`${player}`) && grid3_2.classList.contains(`${player}`) && grid3_3.classList.contains(`${player}`)
@@ -132,7 +134,23 @@ function gameBoard() {
             resetBoard();
             return
 
-        } else if (turn === 1) {
+        } else if (
+            (grid1_1.classList.contains('player1') || grid1_1.classList.contains('player2')) &&
+            (grid1_2.classList.contains('player1') || grid1_2.classList.contains('player2')) &&
+            (grid1_3.classList.contains('player1') || grid1_3.classList.contains('player2')) &&
+            (grid2_1.classList.contains('player1') || grid2_1.classList.contains('player2')) &&
+            (grid2_2.classList.contains('player1') || grid2_2.classList.contains('player2')) &&
+            (grid2_3.classList.contains('player1') || grid2_3.classList.contains('player2')) &&
+            (grid3_1.classList.contains('player1') || grid3_1.classList.contains('player2')) &&
+            (grid3_2.classList.contains('player1') || grid3_2.classList.contains('player2')) &&
+            (grid3_3.classList.contains('player1') || grid3_3.classList.contains('player2'))
+        ) {
+            console.log('test');
+            tieGame();
+            resetBoard();
+            
+        }
+        else if (turn === 1) {
             turn--;
         } else if (turn === 0) {
             turn++;
@@ -141,12 +159,9 @@ function gameBoard() {
 
     const winner = (playerWinner) => {
         changeWinTotal(playerWinner);
-        const board = utils.findElement('#board');
         utils.toggleClassForAll('.grid', 'disable');
         utils.toggleClass('#board', 'blackBackground')
         utils.toggleClass('#winner', 'disable');
-        const again = utils.findElement('#again');
-        const done = utils.findElement('#done');
         again.addEventListener('click', playAgain);
         // done.addEventListener('click', finalScore);
 
@@ -157,6 +172,13 @@ function gameBoard() {
             playerTurn.innerHTML = ('Round Over!!');
             turn = 1;
         }
+    }
+
+    const tieGame = () => {
+        utils.toggleClassForAll('.grid', 'disable');
+        utils.toggleClass('#board', 'blackBackground');
+        utils.toggleClass('#tie', 'disable');
+        again.addEventListener('click', playAgain);
     }
 
     const changeWinTotal = (playerWinner) => {
@@ -181,7 +203,6 @@ function gameBoard() {
             if (grid.classList.contains('player1') || grid.classList.contains('player2')) {
                 grid.classList.remove('player1');
                 grid.classList.remove('player2');
-                console.log('works')
             } else {
                 return
             }
