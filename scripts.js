@@ -59,8 +59,8 @@ function gameBoard() {
     let player2 = player.getPlayerName('player2');
     const playerTurn = utils.findElement('#playerTurn');
     const startButton = utils.findElement('#startButton');
-    const again = utils.findElement('.again');
-    const done = utils.findElement('.done');
+    const again = utils.findElement('#again');
+    const done = utils.findElement('#done');
     const startGame = () => {
 
         if (turn === 1) {
@@ -99,11 +99,12 @@ function gameBoard() {
     }
 
     const playAgain = () => {
-        const again = utils.findElement('.again');
-        const done = utils.findElement('.done');
+        const again = utils.findElement('#again');
+        const done = utils.findElement('#done');
         utils.toggleClass('#winner', 'disable');
         again.removeEventListener('click', playAgain);
         utils.toggleClass('#start', 'disable');
+        utils.toggleClass('#roundOverBtnCtr', 'disable');
         // done.removeEventListener('click', finalScore);
         startGame();
     }
@@ -162,6 +163,8 @@ function gameBoard() {
         utils.toggleClassForAll('.grid', 'disable');
         utils.toggleClass('#board', 'blackBackground')
         utils.toggleClass('#winner', 'disable');
+        utils.toggleClass('#roundOverBtnCtr', 'disable');
+        playerTurn.innerHTML = ('Round Over!');
         again.addEventListener('click', playAgain);
         // done.addEventListener('click', finalScore);
 
