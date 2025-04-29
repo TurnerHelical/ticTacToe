@@ -183,6 +183,45 @@ main {
     box-shadow: none;
 }
 
+#finalScore {
+    grid-area: 1 / 1 / 4 / 4;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+}
+
+#finalScore h2 {
+    font-size: 32px;
+}
+
+#finalScore ul{
+    list-style: none;
+    padding: 0px;
+}
+
+#finalScore li {
+    font-size: 20px;
+}
+
+#finalScore p {
+    font-size: 28px;
+}
+
+#startOver {
+    padding: 10px 40px;
+    width: 200px;
+    border: black 1px solid;
+    border-radius: 10px;
+    box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.5);
+    background-color: rgba(83 , 195 , 189, 0.5 );
+}
+
+#startOver:hover {
+    background-color:black;
+    color: white;
+    box-shadow: none;
+}
 
 footer {
     display: flex;
