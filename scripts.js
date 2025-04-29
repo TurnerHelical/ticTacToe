@@ -23,8 +23,12 @@ function playerFactory() {
         player2Score = '0';
 
     }
+    const resetWins = () => {
+        player1Score = '0';
+        player2Score = '0';
+    }
 
-    return { increaseWin, changeName, getWins, getPlayerName, reset }
+    return { increaseWin, changeName, getWins, getPlayerName, reset, resetWins }
 }
 
 
@@ -53,7 +57,8 @@ function dom() {
 }
 
 function gameBoard() {
-    let roundWinner = '';
+    const tie = utils.findElement('#tie');
+    const win = utils.findElement('#winner');
     let turn = 1;
     let player1 = player.getPlayerName('player1');
     let player2 = player.getPlayerName('player2');
@@ -70,9 +75,10 @@ function gameBoard() {
         }
         utils.toggleClass('#board', 'blackBackground');
         utils.toggleClassForAll('.grid', 'disable');
-        utils.toggleClass('#start', 'disable');
-        const board = utils.findElement('#board');
-        board.addEventListener('click', gamePlay);
+        if (!utils.findElement('#start').classList.contains('disable')) {
+            utils.toggleClass('#start', 'disable');           
+        }
+        utils.findElement('#board').addEventListener('click', gamePlay)
     }
     const gamePlay = function (e) {
         if (turn === 1) {
@@ -99,17 +105,13 @@ function gameBoard() {
     }
 
     const playAgain = () => {
-        const again = utils.findElement('#again');
-        const done = utils.findElement('#done');
-        const tie = utils.findElement('#tie');
-        const winner = utils.findElement('#winner');
         again.removeEventListener('click', playAgain);
         utils.toggleClass('#start', 'disable');
         utils.toggleClass('#roundOverBtnCtr', 'disable');
-        // done.removeEventListener('click', finalScore);
+        done.removeEventListener('click', finalScore);
         if (!tie.classList.contains('disable')) {
             utils.toggleClass('#tie', 'disable');
-        } else if (!winner.classList.contains('disable')) {
+        } else if (!win.classList.contains('disable')) {
             utils.toggleClass('#winner', 'disable');
         }
         startGame();
@@ -136,9 +138,10 @@ function gameBoard() {
             || grid1_3.classList.contains(`${player}`) && grid2_2.classList.contains(`${player}`) && grid3_1.classList.contains(`${player}`)) {
 
             
-            roundWinner = `${player}`;
-            winner(`${player}`);
+            
             resetBoard();
+            winner(`${player}`);
+            
             return
 
         } else if (
@@ -153,8 +156,9 @@ function gameBoard() {
             (grid3_3.classList.contains('player1') || grid3_3.classList.contains('player2'))
         ) {
             console.log('test');
-            tieGame();
             resetBoard();
+            tieGame();
+            
             if (turn === 1) {
                 turn--;
             } else if (turn === 0) {
@@ -177,9 +181,9 @@ function gameBoard() {
         utils.toggleClass('#roundOverBtnCtr', 'disable');
         playerTurn.innerHTML = ('Round Over!');
         again.addEventListener('click', playAgain);
-        // done.addEventListener('click', finalScore);
+        done.addEventListener('click', finalScore);
 
-        if (roundWinner === 'player1') {
+        if (playerWinner === 'player1') {
             playerTurn.innerHTML = ('Round Over!!');
             turn = 0;
         } else {
@@ -195,6 +199,7 @@ function gameBoard() {
         utils.toggleClass('#roundOverBtnCtr', 'disable');
         playerTurn.innerHTML = ('Round Over!');
         again.addEventListener('click', playAgain);
+        done.addEventListener('click', finalScore);
     }
 
     const changeWinTotal = (playerWinner) => {
@@ -202,14 +207,52 @@ function gameBoard() {
         const p1 = utils.findElement('#p1Wins');
         const p2 = utils.findElement('#p2Wins');
         if (playerWinner === 'player1') {
-            const p1Score = player.getWins('player1');
-            p1.innerHTML = (`Wins: ${p1Score}`);
+            p1.innerHTML = (`Wins: ${(player.getWins('player1'))}`);
         } else {
-            const p2Score = player.getWins('player2');
-            p2.innerHTML = (`Wins: ${p2Score}`);
+            p2.innerHTML = (`Wins: ${(player.getWins('player2'))}`);
         }
     }
 
+
+    const finalScore = () => {
+        again.removeEventListener('click', playAgain);
+        done.removeEventListener('click', finalScore);
+        utils.toggleClass('#roundOverBtnCtr', 'disable');
+        if (!tie.classList.contains('disable')) {
+            utils.toggleClass('#tie', 'disable');
+        } else if (!win.classList.contains('disable')) {
+            utils.toggleClass('#winner', 'disable');
+        }
+        const p1Final = utils.findElement('#p1Final');
+        const p2Final = utils.findElement('#p2Final');
+        const gameWinner = utils.findElement('#gameWinner');
+        const startOver = utils.findElement('#startOver');
+        p1Final.innerHTML = (`${player1}: ${player.getWins('player1')}`)
+        p2Final.innerHTML = (`${player2}: ${player.getWins('player2')}`)
+        if (player.getWins('player1') === player.getWins('player2')) {
+            gameWinner.innerHTML = ('Tie Game!');
+        } else if (player.getWins('player1') > player.getWins('player2')) {
+            gameWinner.innerHTML = (`${player1} wins the game!`)
+        } else if (player.getWins('player1') < player.getWins('player2')) {
+            gameWinner.innerHTML = (`${player2} wins the game!`)
+        }
+        utils.toggleClass('#finalScore', 'disable');
+        playerTurn.innerHTML = ('Game Over!');
+        startOver.addEventListener('click', restartButKeepNames);
+
+    }
+
+    const restartButKeepNames = () => {
+        utils.findElement('#startOver').removeEventListener('click', restartButKeepNames)
+        utils.toggleClass('#finalScore', 'disable');
+        player.resetWins();
+        const p1 = utils.findElement('#p1Wins');
+        const p2 = utils.findElement('#p2Wins');
+        p1.innerHTML = (`Wins: ${(player.getWins('player1'))}`);
+        p2.innerHTML = (`Wins: ${(player.getWins('player2'))}`);
+        turn = 1;
+        startGame();
+    }
 
     const resetBoard = () => {
         const board = utils.findElement('#board');
