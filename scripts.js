@@ -101,11 +101,17 @@ function gameBoard() {
     const playAgain = () => {
         const again = utils.findElement('#again');
         const done = utils.findElement('#done');
-        utils.toggleClass('#winner', 'disable');
+        const tie = utils.findElement('#tie');
+        const winner = utils.findElement('#winner');
         again.removeEventListener('click', playAgain);
         utils.toggleClass('#start', 'disable');
         utils.toggleClass('#roundOverBtnCtr', 'disable');
         // done.removeEventListener('click', finalScore);
+        if (!tie.classList.contains('disable')) {
+            utils.toggleClass('#tie', 'disable');
+        } else if (!winner.classList.contains('disable')) {
+            utils.toggleClass('#winner', 'disable');
+        }
         startGame();
     }
 
@@ -181,6 +187,7 @@ function gameBoard() {
         utils.toggleClassForAll('.grid', 'disable');
         utils.toggleClass('#board', 'blackBackground');
         utils.toggleClass('#tie', 'disable');
+        utils.toggleClass('#roundOverBtnCtr', 'disable');
         again.addEventListener('click', playAgain);
     }
 
