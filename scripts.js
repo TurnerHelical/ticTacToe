@@ -266,13 +266,48 @@ function gameBoard() {
                 return
             }
         })
-        roundWinner = '';
     }
 
 
     startButton.addEventListener('click', startGame);
     return { startGame };
 }
+
+function changePlayerName() {
+    utils.toggleClass('#nameChange', 'disable' )
+    utils.toggleClassForAll('.player', 'disable');
+    utils.toggleClassForAll('.playerNameChange', 'disable');
+    utils.findElement('#player1Name').addEventListener('keydown', player1NameChange);
+    utils.findElement('#player2Name').addEventListener('keydown', player2NameChange);
+}
+
+function player1NameChange(e) {
+    if (e.code === "Enter") {
+        player.changeName('player1', `${utils.findElement('#player1Name').value}`);
+        utils.findElement('#p1Name').innerHTML = `${player.getPlayerName('player1')}`
+        utils.toggleClassForAll('.user1', 'disable');
+        if ((utils.findElement('#secondUser')).classList.contains('disable') && (utils.findElement('#firstUser')).classList.contains('disable')) {
+            utils.toggleClass('#nameChange', 'disable')
+        }
+    }
+    return
+}
+
+function player2NameChange(e) {
+    if (e.code === "Enter") {
+        player.changeName('player2', `${utils.findElement('#player2Name').value}`);
+        utils.findElement('#p2Name').innerHTML = `${player.getPlayerName('player2')}`
+        utils.toggleClassForAll('.user2', 'disable');
+        if ((utils.findElement('#secondUser')).classList.contains('disable') && (utils.findElement('#firstUser')).classList.contains('disable')) {
+            utils.toggleClass('#nameChange', 'disable')
+        }
+    }
+    return
+}
+    
+
+
+utils.findElement('#nameChange').addEventListener('click', changePlayerName);
 // On page load add event listener to the start button
 // also add event listerners to the change name and reset button
 // when change name is clicked, pop a modal and allow users to put in their names

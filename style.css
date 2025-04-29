@@ -50,6 +50,22 @@ main {
     gap: 10px;
 }
 
+.playerNameChange {
+    padding: 5px;
+    display: flex;
+    flex-direction: column;
+}
+
+.playerNameChange label {
+    text-align: center;
+}
+
+.playerNameChange input {
+    width: 200px;
+    align-self: center;
+}
+
+
 .player h4 {
     text-decoration: underline;
 }

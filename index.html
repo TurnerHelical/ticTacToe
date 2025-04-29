@@ -22,14 +22,26 @@
     </header>
     <main>
         <div id="mainContainer" class="borderDiv">
-            <div class="player">
-                <h4>Player 1</h4>
+            <div class="player user1">
+                <h4 id="p1Name">Player 1</h4>
                 <p id="p1Wins">Wins: 0 </p>
             </div>
-            <div class="player">
-                <h4>Player 2</h4>
+
+            <div class="playerNameChange disable user1" id="firstUser">
+                <label for="player1Name"> Player 1 Name: </label>
+                <input type="text" id="player1Name">
+            </div>
+
+            <div class="player user2">
+                <h4 id="p2Name">Player 2</h4>
                 <p id="p2Wins">Wins: 0 </p>
             </div>
+
+            <div class="playerNameChange disable user2" id="secondUser">
+                <label for="player2Name"> Player 2 Name: </label>
+                <input type="text" id="player2Name">
+            </div>
+
             <div id="gameBoard">
                 <div id="gameContainer" class="borderDiv">
                     <h3 id="playerTurn">Play Here!</h3>
@@ -44,7 +56,7 @@
                         <div class="grid disable" id="grid3-2"></div>
                         <div class="grid disable" id="grid3-3"></div>
 
-                        <div id="start" class="disable">
+                        <div id="start" class="">
 
                             <button id="startButton">Start</button>
 
@@ -67,7 +79,7 @@
                             <button id="done">Done</button>
                         </div>
 
-                        <div id="finalScore" class="">
+                        <div id="finalScore" class="disable">
                             <h2>Final Scores:</h2>
                             <div>
                                 <ul>
