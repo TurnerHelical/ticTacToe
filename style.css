@@ -162,6 +162,10 @@ main {
     font-size: 32px;
 }
 
+#tieMessage {
+    font-size: 32px;
+}
+
 #winnerComment {
 
     font-size: 20px;

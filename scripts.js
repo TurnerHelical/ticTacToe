@@ -60,8 +60,6 @@ function gameBoard() {
     const tie = utils.findElement('#tie');
     const win = utils.findElement('#winner');
     let turn = 1;
-    let player1 = player.getPlayerName('player1');
-    let player2 = player.getPlayerName('player2');
     const playerTurn = utils.findElement('#playerTurn');
     const startButton = utils.findElement('#startButton');
     const again = utils.findElement('#again');
@@ -69,9 +67,9 @@ function gameBoard() {
     const startGame = () => {
 
         if (turn === 1) {
-            playerTurn.innerHTML = (`${player1}'s Turn`)
+            playerTurn.innerHTML = (`${player.getPlayerName('player1')}'s Turn`);
         } else if (turn === 0) {
-            playerTurn.innerHTML = (`${player2}'s Turn`)
+            playerTurn.innerHTML = (`${player.getPlayerName('player2')}'s Turn`);
         }
         utils.toggleClass('#board', 'blackBackground');
         utils.toggleClassForAll('.grid', 'disable');
@@ -87,7 +85,7 @@ function gameBoard() {
                 return
             } else {
                 utils.toggleClass(`#${e.target.id}`, 'player1');
-                playerTurn.innerHTML = (`${player2}'s Turn`)
+                playerTurn.innerHTML = (`${player.getPlayerName('player2')}'s Turn`)
                 evaluateBoard('player1');
 
             }
@@ -97,7 +95,7 @@ function gameBoard() {
                 return
             } else {
                 utils.toggleClass(`#${e.target.id}`, 'player2');
-                playerTurn.innerHTML = (`${player1}'s Turn`)
+                playerTurn.innerHTML = (`${player.getPlayerName('player1')}'s Turn`)
                 evaluateBoard('player2');
 
             }
@@ -174,20 +172,22 @@ function gameBoard() {
     }
 
     const winner = (playerWinner) => {
+        console.log(playerWinner)
         changeWinTotal(playerWinner);
         utils.toggleClassForAll('.grid', 'disable');
         utils.toggleClass('#board', 'blackBackground')
         utils.toggleClass('#winner', 'disable');
         utils.toggleClass('#roundOverBtnCtr', 'disable');
-        playerTurn.innerHTML = ('Round Over!');
         again.addEventListener('click', playAgain);
         done.addEventListener('click', finalScore);
 
         if (playerWinner === 'player1') {
             playerTurn.innerHTML = ('Round Over!!');
+            utils.findElement('#winnerName').innerHTML = (`${player.getPlayerName('player1')} wins this round!`)
             turn = 0;
         } else {
             playerTurn.innerHTML = ('Round Over!!');
+            utils.findElement('#winnerName').innerHTML = (`${player.getPlayerName('player2')} wins this round!`)
             turn = 1;
         }
     }
@@ -227,14 +227,14 @@ function gameBoard() {
         const p2Final = utils.findElement('#p2Final');
         const gameWinner = utils.findElement('#gameWinner');
         const startOver = utils.findElement('#startOver');
-        p1Final.innerHTML = (`${player1}: ${player.getWins('player1')}`)
-        p2Final.innerHTML = (`${player2}: ${player.getWins('player2')}`)
+        p1Final.innerHTML = (`${player.getPlayerName('player1')}: ${player.getWins('player1')}`)
+        p2Final.innerHTML = (`${player.getPlayerName('player2')}: ${player.getWins('player2')}`)
         if (player.getWins('player1') === player.getWins('player2')) {
             gameWinner.innerHTML = ('Tie Game!');
         } else if (player.getWins('player1') > player.getWins('player2')) {
-            gameWinner.innerHTML = (`${player1} wins the game!`)
+            gameWinner.innerHTML = (`${player.getPlayerName('player1')} wins the game!`)
         } else if (player.getWins('player1') < player.getWins('player2')) {
-            gameWinner.innerHTML = (`${player2} wins the game!`)
+            gameWinner.innerHTML = (`${player.getPlayerName('player2')} wins the game!`)
         }
         utils.toggleClass('#finalScore', 'disable');
         playerTurn.innerHTML = ('Game Over!');
