@@ -155,6 +155,11 @@ function gameBoard() {
             console.log('test');
             tieGame();
             resetBoard();
+            if (turn === 1) {
+                turn--;
+            } else if (turn === 0) {
+                turn++;
+            }
             
         }
         else if (turn === 1) {
@@ -188,6 +193,7 @@ function gameBoard() {
         utils.toggleClass('#board', 'blackBackground');
         utils.toggleClass('#tie', 'disable');
         utils.toggleClass('#roundOverBtnCtr', 'disable');
+        playerTurn.innerHTML = ('Round Over!');
         again.addEventListener('click', playAgain);
     }
 
