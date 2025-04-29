@@ -1,7 +1,3 @@
-// function createPlayer(name) {
-//     const getName = (name) =>  
-// }
-
 function playerFactory() {
     let player1Name = 'Player 1';
     let player2Name = 'Player 2'
@@ -312,13 +308,4 @@ function reset() {
 
 utils.findElement('#nameChange').addEventListener('click', changePlayerName);
 utils.findElement('#reset').addEventListener('click', reset);
-// On page load add event listener to the start button
-// also add event listerners to the change name and reset button
-// when change name is clicked, pop a modal and allow users to put in their names
-// when reset is clicked, reset the gameboard back to start and default names
-// when start button is pushed, add disable class to it and remove disable class from the grid's
-// when hover over the grids change background color to gray
-//when grid is clicked change the display to show an X (player1) or an O (player2)
-// when either player has 3 of their icons in a row, increment the win score under their name
-// change the board display to say name of winner and win message
-// add a play again button to display and add an event listerner to it to play the game again without resetting scores or names
+
