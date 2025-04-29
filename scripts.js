@@ -304,10 +304,14 @@ function player2NameChange(e) {
     }
     return
 }
-    
+
+function reset() {
+    window.location.reload();
+}
 
 
 utils.findElement('#nameChange').addEventListener('click', changePlayerName);
+utils.findElement('#reset').addEventListener('click', reset);
 // On page load add event listener to the start button
 // also add event listerners to the change name and reset button
 // when change name is clicked, pop a modal and allow users to put in their names
